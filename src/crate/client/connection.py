@@ -31,6 +31,7 @@ class Connection(object):
     def __init__(self,
                  servers=None,
                  timeout=None,
+                 retry_interval=30,
                  backoff_factor=0,
                  client=None,
                  verify_ssl_cert=True,
@@ -56,6 +57,9 @@ class Connection(object):
         :param timeout:
             (optional)
             define the retry timeout for unreachable servers in seconds
+        :param retry_interval:
+            (optional)
+            define the retry interval for unreachable servers in seconds
         :param backoff_factor:
             (optional)
             define the retry interval for unreachable servers in seconds
@@ -132,6 +136,7 @@ class Connection(object):
         else:
             self.client = Client(servers,
                                  timeout=timeout,
+                                 retry_interval=retry_interval,
                                  backoff_factor=backoff_factor,
                                  verify_ssl_cert=verify_ssl_cert,
                                  ca_cert=ca_cert,

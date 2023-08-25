@@ -324,15 +324,13 @@ class Client(object):
     SQL_PATH = '/_sql?types=true'
     """Crate URI path for issuing SQL statements."""
 
-    retry_interval = 30
-    """Retry interval for failed servers in seconds."""
-
     default_server = "http://127.0.0.1:4200"
     """Default server to use if no servers are given on instantiation."""
 
     def __init__(self,
                  servers=None,
                  timeout=None,
+                 retry_interval=30,
                  backoff_factor=0,
                  verify_ssl_cert=True,
                  ca_cert=None,
@@ -379,6 +377,7 @@ class Client(object):
             'socket_tcp_keepintvl': socket_tcp_keepintvl,
             'socket_tcp_keepcnt': socket_tcp_keepcnt,
         })
+        self.retry_interval = retry_interval
         self.backoff_factor = backoff_factor
         self.server_pool = {}
         self._update_server_pool(servers, **pool_kw)
